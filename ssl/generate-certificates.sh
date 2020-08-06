@@ -70,10 +70,14 @@ openssl genpkey ${GENPKEY_OPTS} -out server-key.pem
 openssl req -new -subj "/CN=${STACK_NAME}-server" -key server-key.pem -out server.csr
 
 # Alts IPs
-echo "subjectAltName = IP:${PUBLIC_IP},IP:${PRIVATE_IP},IP:127.0.0.1" > server-extfile.cnf
+echo "subjectAltName = IP:${PUBLIC_IP},IP:${PRIVATE_IP},IP:127.0.0.1" \
+    > server-extfile.cnf
+
 # Server certificate
 openssl x509 -req -days ${TEN_YEARS_IN_DAYS} \
-    -extfile server-extfile.cnf -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem
+    -extfile server-extfile.cnf -in server.csr \
+    -CA ca.pem -CAkey ca-key.pem -CAcreateserial \
+    -out server-cert.pem
 
 ###########################################################
 # Client key
@@ -86,7 +90,9 @@ openssl req -new -subj "/CN=${STACK_NAME}-client" -key client-key.pem -out clien
 echo "extendedKeyUsage = clientAuth" > client-extfile.cnf
 # Client certificate
 openssl x509 -req -days ${TEN_YEARS_IN_DAYS} \
-    -extfile client-extfile.cnf -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem
+    -extfile client-extfile.cnf -in client.csr \
+    -CA ca.pem -CAkey ca-key.pem -CAcreateserial \
+    -out client-cert.pem
 
 # Securing
 chmod -v 0444 *
