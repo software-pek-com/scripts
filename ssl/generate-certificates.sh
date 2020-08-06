@@ -52,7 +52,7 @@ OUT_DIR=${STACK_NAME}-${TS}
 DOCKER_DIR=/etc/docker/ssl
 
 mkdir ${OUT_DIR}
-chmod 0700 ${OUT_DIR}/
+chmod 0755 ${OUT_DIR}/
 cd ${OUT_DIR}
 
 ###########################################################
