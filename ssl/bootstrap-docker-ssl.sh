@@ -26,6 +26,7 @@ PRIVATE_IP=$(hostname | cut -d- -f2- | sed 's/-/./g')
 SCRIPT_ROOT=https://raw.githubusercontent.com/software-pek-com/scripts/master/ssl
 
 # Assumes we are in a directory where we can work freely e.g. /tmp.
+cd /tmp
 
 curl ${SCRIPT_ROOT}/generate-certificates.sh >> generate-certificates.sh
 curl ${SCRIPT_ROOT}/setup-docker-certificates.sh >> setup-docker-certificates.sh
