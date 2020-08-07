@@ -32,7 +32,7 @@ cd /tmp
 
 # Grab scripts
 curl ${SCRIPT_ROOT}/ssl/generate-certificates.sh > generate-certificates.sh
-curl ${SCRIPT_ROOT}/configure-docker-tls.sh > configure-docker-tls.sh
+curl ${SCRIPT_ROOT}/docker/configure-docker-tls.sh > configure-docker-tls.sh
 chmod 755 generate-certificates.sh configure-docker-tls.sh
 
 # Generate SSL certificates.
