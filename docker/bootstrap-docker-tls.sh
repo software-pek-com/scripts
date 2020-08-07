@@ -25,7 +25,7 @@ fi
 PUBLIC_IP=$(curl http://checkip.amazonaws.com/)
 # Assumes EC2 Instance hostname e.g. ip-172-51-22-174.
 PRIVATE_IP=$(hostname | cut -d- -f2- | sed 's/-/./g')
-SCRIPT_ROOT=https://raw.githubusercontent.com/software-pek-com/scripts/master/
+SCRIPT_ROOT=https://raw.githubusercontent.com/software-pek-com/scripts/master
 
 # We need a directory where we can work freely.
 cd /tmp
