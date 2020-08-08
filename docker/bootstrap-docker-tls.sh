@@ -40,4 +40,7 @@ chmod 755 generate-certificates.sh configure-docker-tls.sh
 # Configure docker with TLS.
 ./configure-docker-tls.sh
 
+# Cleanup
+rm -f ./generate-certificates.sh ./configure-docker-tls.sh
+
 exit 0;
