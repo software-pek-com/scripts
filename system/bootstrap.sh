@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Redirect all stdout to log file, and stderr too.
-exec > >(tee -i bootstrap.log)
-exec 2>&1
-
 #####################################################################
 # Usage
 function print_usage {    
