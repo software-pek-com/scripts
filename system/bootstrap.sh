@@ -65,14 +65,18 @@ function create_volume_directories {
     ./create-volume-directories.sh -d ${DOMAIN_NAME} -p /mnt/${STACK_NAME}
 }
 
-# echo "DomainName: ${DOMAIN_NAME}"
-# echo "StackName: ${STACK_NAME}"
-# echo "Snapshot: ${SNAPSHOT_ID}"
-# echo "ScriptRoot: ${SCRIPT_ROOT}"
-# exit 0;
+function create_bootsrap_log {
+    echo "DomainName: ${DOMAIN_NAME}" >> boostrap.log
+    echo "StackName: ${STACK_NAME}" >> boostrap.log
+    echo "Snapshot: ${SNAPSHOT_ID}" >> boostrap.log
+    echo "ScriptRoot: ${SCRIPT_ROOT}" >> boostrap.log
+}
 
 #####################################################################
 # Body
+
+create_bootsrap_log
+# exit 0;
 
 mkdir /mnt/${SNAPSHOT_ID}
 ln -s /mnt/${SNAPSHOT_ID} /mnt/${STACK_NAME}
