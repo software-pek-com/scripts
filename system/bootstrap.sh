@@ -137,5 +137,3 @@ create_bootstrap_log
 mount_snapshot
 update_and_install
 create_volume_directories
-
-# exit 0;
