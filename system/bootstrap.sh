@@ -65,7 +65,7 @@ function create_volume_directories {
     ./create-volume-directories.sh -d ${DOMAIN_NAME} -p /mnt/${STACK_NAME}
 }
 
-function create_bootsrap_log {
+function create_bootstrap_log {
     echo "DomainName: ${DOMAIN_NAME}" >> boostrap.log
     echo "StackName: ${STACK_NAME}" >> boostrap.log
     echo "Snapshot: ${SNAPSHOT_ID}" >> boostrap.log
@@ -75,14 +75,14 @@ function create_bootsrap_log {
 #####################################################################
 # Body
 
-create_bootsrap_log
+create_bootstrap_log
 # exit 0;
 
 mkdir /mnt/${SNAPSHOT_ID}
-ln -s /mnt/${SNAPSHOT_ID} /mnt/${STACK_NAME}
 mkfs.xfs /dev/xvdf
-echo "/dev/xvdf	/mnt/${STACK_NAME}	auto	defaults,nofail	0	2" >> /etc/fstab
+echo "/dev/xvdf	/mnt/${SNAPSHOT_ID}	auto	defaults,nofail	0	2" >> /etc/fstab
 mount -a
+ln -s /mnt/${SNAPSHOT_ID} /mnt/${STACK_NAME}
 
 apt-get -y update
 apt-get -y install \
