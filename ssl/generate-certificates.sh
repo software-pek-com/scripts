@@ -1,47 +1,50 @@
 #!/bin/bash
 
+local me=`basename "$0"`
+
+# Script interface (required options):
+function print_usage {
+    echo "usage: $me [-p privateip] [-s stackname] [-u publicip]"
+    echo "  -p privateip  e.g. 1.2.3.1"
+    echo "  -s stackname  e.g. xyz-com"
+    echo "  -u publicip   e.g. 1.2.3.0"
+}
+
+# We need 3 options with values so there must be 6 script arguments
+if [ $# -ne 6 ]; then
+    print_usage
+    exit 1
+fi
+
 while getopts "s:p:u:" OPTION; do
     case ${OPTION} in
     s)
         STACK_NAME=${OPTARG}
         if [ -z ${STACK_NAME} ]; then
-            echo "Stack name is required, use -s xyz"
+            print_usage
             exit 1
         fi
         ;;
     p)
         PRIVATE_IP=${OPTARG}
         if [ -z "${PRIVATE_IP}" ]; then
-            echo "Private IP address is required, use -p xyz"
+            print_usage
             exit 1
         fi
         ;;
     u)
         PUBLIC_IP=${OPTARG}
         if [ -z "${PUBLIC_IP}" ]; then
-            echo "Public IP address is required, use -u xyz"
+            print_usage
             exit 1
         fi
         ;;
     *)
-        echo "Incorrect options provided"
+        print_usage
         exit 1
         ;;
     esac
 done
-
-if [ -z "${STACK_NAME}" ]; then
-    echo "Stack name is required, use -s xyz"
-    exit 1
-fi
-if [ -z "${PRIVATE_IP}" ]; then
-    echo "Private IP address is required, use -p xyz"
-    exit 1
-fi
-if [ -z "${PUBLIC_IP}" ]; then
-    echo "Public IP address is required, use -u xyz"
-    exit 1
-fi
 
 GENPKEY_OPTS="-algorithm RSA -pkeyopt rsa_keygen_bits:2048"
 TEN_YEARS_IN_DAYS=3650

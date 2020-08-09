@@ -1,23 +1,38 @@
 #!/bin/bash
 
-while getopts "d:s:" OPTION; do
+local me=`basename "$0"`
+
+# Script interface (required options):
+function print_usage {
+    echo "usage: $me [-d domainname] [-n stackname]"
+    echo "  -d domainname  e.g. xyz.com"
+    echo "  -n stackname   e.g. xyz-com"
+}
+
+# We need 2 options with values so there must be 4 script arguments
+if [ $# -ne 4 ]; then
+    print_usage
+    exit 1
+fi
+
+while getopts "d:n:" OPTION; do
     case ${OPTION} in
     d)
         DOMAIN_NAME=${OPTARG}
         if [ -z ${DOMAIN_NAME} ]; then
-            echo "Domain name is required, use -d xyz.com"
+            print_usage
             exit 1
         fi
         ;;
-    s)
+    n)
         STACK_NAME=${OPTARG}
         if [ -z ${STACK_NAME} ]; then
-            echo "Stack name is required, use -s xyz-com"
+            print_usage
             exit 1
         fi
         ;;
     *)
-        echo "Incorrect options provided"
+        print_usage
         exit 1
         ;;
     esac
@@ -58,5 +73,3 @@ chmod 755 generate-certificates.sh configure-docker-tls.sh create-volume-directo
 
 # Cleanup
 rm -f ./generate-certificates.sh ./configure-docker-tls.sh ./create-volume-directories.sh
-
-exit 0;

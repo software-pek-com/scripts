@@ -1,40 +1,45 @@
 #!/bin/bash
 
+local me=`basename "$0"`
+
+# Script interface (required options):
+function print_usage {
+    echo "usage: $me [-d domainname] [-p deploypath]"
+    echo "  -d domainname  e.g. xyz.com"
+    echo "  -p deploypath  e.g. /mnt/xyz"
+}
+
+# We need 2 options with values so there must be 4 script arguments
+if [ $# -ne 4 ]; then
+    print_usage
+    exit 1
+fi
+
 while getopts "d:p:" OPTION; do
     case ${OPTION} in
     d)
         DOMAIN_NAME=${OPTARG}
         if [ -z ${DOMAIN_NAME} ]; then
-            echo "Domain name is required, use -d xyz.com"
+            print_usage
             exit 1
         fi
         ;;
     p)
         DEPLOY_PATH=${OPTARG}
         if [ -z ${DEPLOY_PATH} ]; then
-            echo "Path is required, use -p xyz"
+            print_usage
             exit 1
         fi
         ;;
     *)
-        echo "Incorrect options provided"
+        print_usage
         exit 1
         ;;
     esac
 done
 
-if [ -z "${DOMAIN_NAME}" ]; then
-    echo "Domain name is required, use -d xyz.com"
-    exit 1
-fi
-
-if [ -z "${DEPLOY_PATH}" ]; then
-    echo "Path is required, use -p xyz"
-    exit 1
-fi
-
 if [ ! -d "${DEPLOY_PATH}" ]; then
-    echo "Path ${DEPLOY_PATH} invalid (does not exists)." 
+    echo "$me: path does not exist '${DEPLOY_PATH}'." 
     exit 1
 fi
 
