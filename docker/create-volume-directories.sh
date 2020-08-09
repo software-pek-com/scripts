@@ -1,6 +1,6 @@
 #!/bin/bash
 
-local me=`basename "$0"`
+me=`basename "$0"`
 
 # Script interface (required options):
 function print_usage {

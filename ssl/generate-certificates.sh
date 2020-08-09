@@ -1,9 +1,8 @@
 #!/bin/bash
 
-local me=`basename "$0"`
-
 # Script interface (required options):
 function print_usage {
+    local me=`basename "$0"`
     echo "usage: $me [-p privateip] [-s stackname] [-u publicip]"
     echo "  -p privateip  e.g. 1.2.3.1"
     echo "  -s stackname  e.g. xyz-com"

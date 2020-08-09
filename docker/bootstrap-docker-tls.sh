@@ -1,9 +1,8 @@
 #!/bin/bash
 
-local me=`basename "$0"`
-
 # Script interface (required options):
 function print_usage {
+    local me=`basename "$0"`
     echo "usage: $me [-d domainname] [-n stackname]"
     echo "  -d domainname  e.g. xyz.com"
     echo "  -n stackname   e.g. xyz-com"
