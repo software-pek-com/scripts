@@ -4,10 +4,11 @@
 # Usage
 function print_usage {    
     local me=`basename "$0"`
-    echo "usage: $me [-d domainname] [-n stackname] [-s snapshotid]"
-    echo "  -d domainname  e.g. xyz.com"
-    echo "  -n stackname   e.g. xyz-com"
-    echo "  -s snapshotid  e.g. snap-123"
+    echo "usage: $me [-d domainname] [-n stackname] [-s snapshotid] [-v]"
+    echo "  -d domainname e.g. -d xyz.com"
+    echo "  -n stackname e.g. -n xyz-com"
+    echo "  -s snapshotid e.g. -s snap-123"
+    echo "  -v create volume directories e.g. -v"
 }
 
 # We need 3 options with values so there must be 6 script arguments
@@ -16,7 +17,7 @@ if [ $# -ne 6 ]; then
     exit 1
 fi
 
-while getopts "d:n:s:" OPTION; do
+while getopts "d:n:s:v" OPTION; do
     case ${OPTION} in
     d)
         DOMAIN_NAME=${OPTARG}
@@ -38,6 +39,9 @@ while getopts "d:n:s:" OPTION; do
             print_usage
             exit 1
         fi
+        ;;
+    v)
+        CREATE_VOLUME_DIRECTORIES=1
         ;;
     *)
         print_usage
@@ -98,11 +102,8 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(
 apt-get -y install docker-ce docker-ce-cli containerd.io
 usermod -aG docker ubuntu
 
-# Uncomment below if you want to configure docker for remote access using TLS.
-# It works, but in the end remote docker admin is more trouble than it is worth.
-# E.g. docker-compose takes any 'host' defined volumes from local not remote disk.
-# bootstrap_docker_tls
-
-create_volume_directories
+if [ -z ${CREATE_VOLUME_DIRECTORIES+x} ]; then
+    create_volume_directories
+fi
 
 exit 0;
