@@ -59,16 +59,13 @@ cd /tmp
 # Grab scripts
 curl ${SCRIPT_ROOT}/ssl/generate-certificates.sh > generate-certificates.sh
 curl ${SCRIPT_ROOT}/docker/configure-docker-tls.sh > configure-docker-tls.sh
-curl ${SCRIPT_ROOT}/docker/create-volume-directories.sh > create-volume-directories.sh
 
-chmod 755 generate-certificates.sh configure-docker-tls.sh create-volume-directories.sh
+chmod 755 generate-certificates.sh configure-docker-tls.sh
 
 # Generate SSL certificates.
 ./generate-certificates.sh -s ${STACK_NAME} -p ${PRIVATE_IP} -u ${PUBLIC_IP}
 # Configure docker with TLS.
 ./configure-docker-tls.sh
-# Prepare directories for use as container volumes.
-./create-volume-directories.sh -d ${DOMAIN_NAME} -p /mnt/${STACK_NAME}
 
 # Cleanup
-rm -f ./generate-certificates.sh ./configure-docker-tls.sh ./create-volume-directories.sh
+rm -f ./generate-certificates.sh ./configure-docker-tls.sh

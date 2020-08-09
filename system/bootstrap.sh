@@ -46,6 +46,8 @@ while getopts "d:n:s:" OPTION; do
     esac
 done
 
+SCRIPT_ROOT=https://raw.githubusercontent.com/software-pek-com/scripts/master
+
 #####################################################################
 # Functions
 
@@ -56,9 +58,17 @@ function bootstrap_docker_tls {
     rm -f /tmp/c-docker-tls.sh
 }
 
+function create_volume_directories {
+    curl ${SCRIPT_ROOT}/docker/create-volume-directories.sh > create-volume-directories.sh
+
+    chmod 755 create-volume-directories.sh
+    ./create-volume-directories.sh -d ${DOMAIN_NAME} -p /mnt/${STACK_NAME}
+}
+
 # echo "DomainName: ${DOMAIN_NAME}"
 # echo "StackName: ${STACK_NAME}"
 # echo "Snapshot: ${SNAPSHOT_ID}"
+# echo "ScriptRoot: ${SCRIPT_ROOT}"
 # exit 0;
 
 #####################################################################
@@ -88,5 +98,7 @@ usermod -aG docker ubuntu
 # It works, but in the end remote docker admin is more trouble than it is worth.
 # E.g. docker-compose takes any 'host' defined volumes from local not remote disk.
 # bootstrap_docker_tls
+
+create_volume_directories
 
 exit 0;

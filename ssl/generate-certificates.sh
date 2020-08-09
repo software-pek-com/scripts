@@ -15,7 +15,7 @@ if [ $# -ne 6 ]; then
     exit 1
 fi
 
-while getopts "s:p:u:" OPTION; do
+while getopts "p:s:u:" OPTION; do
     case ${OPTION} in
     s)
         STACK_NAME=${OPTARG}
@@ -107,5 +107,3 @@ sudo mkdir -p ${DOCKER_DIR}
 sudo chown root:docker ${DOCKER_DIR}
 sudo chmod 700 ${DOCKER_DIR}
 sudo cp ${OUT_DIR}/{ca,server-*}.pem ${DOCKER_DIR}
-
-exit 0;

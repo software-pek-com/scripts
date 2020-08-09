@@ -43,20 +43,30 @@ if [ ! -d "${DEPLOY_PATH}" ]; then
     exit 1
 fi
 
+function create_nginx_directories {
+    mkdir -p ${DEPLOY_PATH}/nginx-proxy
+    mkdir -p ${DEPLOY_PATH}/nginx-proxy/certs
+    mkdir -p ${DEPLOY_PATH}/nginx-proxy/conf.d
+    mkdir -p ${DEPLOY_PATH}/nginx-proxy/html
+    mkdir -p ${DEPLOY_PATH}/nginx-proxy/vhost.d
+}
+
+function create_db_directories {
+    mkdir -p ${DEPLOY_PATH}/${DOMAIN_NAME}/db
+}
+
+function create_www_directories {
+    mkdir -p ${DEPLOY_PATH}/${DOMAIN_NAME}/www
+    
+    chown www-data ${DEPLOY_PATH}/${DOMAIN_NAME}/www
+    chgrp www-data ${DEPLOY_PATH}/${DOMAIN_NAME}/www
+}
+
 mkdir -p ${DEPLOY_PATH}
-mkdir -p ${DEPLOY_PATH}/nginx-proxy
-mkdir -p ${DEPLOY_PATH}/nginx-proxy/certs
-mkdir -p ${DEPLOY_PATH}/nginx-proxy/conf.d
-mkdir -p ${DEPLOY_PATH}/nginx-proxy/html
-mkdir -p ${DEPLOY_PATH}/nginx-proxy/vhost.d
-
 mkdir -p ${DEPLOY_PATH}/${DOMAIN_NAME}
-mkdir -p ${DEPLOY_PATH}/${DOMAIN_NAME}/db
-mkdir -p ${DEPLOY_PATH}/${DOMAIN_NAME}/www
 
-curl -o ${DEPLOY_PATH}/nginx.tmpl https://raw.githubusercontent.com/jwilder/docker-gen/master/templates/nginx.tmpl
+create_nginx_directories
+create_db_directories
+create_www_directories
 
-chown -R root ${DEPLOY_PATH}
-chgrp -R root ${DEPLOY_PATH}
-chown www-data ${DEPLOY_PATH}/${DOMAIN_NAME}/www
-chgrp www-data ${DEPLOY_PATH}/${DOMAIN_NAME}/www
+chmod -R 755 ${DEPLOY_PATH}
