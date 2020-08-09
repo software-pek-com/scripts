@@ -46,9 +46,9 @@ fi
 GENPKEY_OPTS="-algorithm RSA -pkeyopt rsa_keygen_bits:2048"
 TEN_YEARS_IN_DAYS=3650
 
-TS=$(date +%Y%m%d_%H%M%S)
+#TS=$(date +%Y%m%d_%H%M%S)
 #OUT_DIR=docker-tls-${TS}
-OUT_DIR=${STACK_NAME}-${TS}
+OUT_DIR=${STACK_NAME}-ssl
 DOCKER_DIR=/etc/docker/ssl
 
 mkdir ${OUT_DIR}
